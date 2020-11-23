@@ -1,0 +1,8 @@
+---
+# vars file for ./role/users
+
+user_newusers:
+  h_nakano:
+    detail: "Operation User"
+    pass: "{{ 'housek8s' |password_hash('sha256') }}"
+    groups: adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,netdev,spi,i2c,gpio

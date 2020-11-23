@@ -1,0 +1,7 @@
+---
+- name: Setup for Kubernetes clusters using kubeadm
+  hosts: all
+  become: true
+  roles:
+    - { role: common/resolver, tags: resolver }
+    - { role: common/users,    tags: users }

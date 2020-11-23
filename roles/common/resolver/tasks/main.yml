@@ -1,0 +1,23 @@
+---
+# tasks file for ./roles/resolver
+
+- name: main / Set hostname
+  hostname:
+    name: "{{ inventroy_hostname }}"
+
+- name: main / Deploy hosts file
+  templates:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
+
+- name: main / Reboot host
+  reboot:
+    reboot_timeout: 500
+
+- name: main / Wait for reboot
+  wait_for_connection:
+    delay: 30
+    timeout: 180

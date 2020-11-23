@@ -1,0 +1,23 @@
+---
+# tasks file for ./roles/users
+
+- name: main / Create new users
+  user:
+    name: "{{ item.key }}"
+    password: "{{ item.value.pass }}"
+    shell: /bin/bash
+    home: "/home{{ item.key }}"
+    state: present
+    groups: "{{ item.value.groups }}"
+  loop: "{{ user_newusers|dict2items }}"
+
+- name: main / Lock pi user
+  user:
+    name: pi
+    password: '*'
+
+- name: main / Distribute authoraized key
+  authorized_key:
+    user: "{{ item.key }}"
+    key: "{{ lookup('file', '/home/h_nakano/.ssh/id_rsa_housek8s.pub') }}"
+  loop: "{{ user_newusers|dict2items }}"
